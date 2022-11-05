@@ -1,5 +1,6 @@
 import requests
 from app.helpers.request_time import request_time
+from app.helpers.method import request_method
 
 class InstagramAdapter:
     def __init__(self, social_api_url, header) -> None:
@@ -7,8 +8,13 @@ class InstagramAdapter:
         self.header = header
 
     def get_instagram_location(self, location_id):
-        endpoint = f'{self.social_api_url}/instagram/locations/{location_id}'
-        return requests.get(url=endpoint, headers=self.header).json()
+        data = {
+            "method": "GET",
+            "endpoint": f'{self.social_api_url}/instagram/locations/{location_id}',
+            "header": self.header,
+            "payload": None
+        }
+        return request_method(data=data)
 
     def get_instagram_reel_from_account_id(self, account_id):
         endpoint = f'{self.social_api_url}/instagram/accounts/{account_id}/reels'
@@ -19,9 +25,14 @@ class InstagramAdapter:
         return requests.get(url=endpoint, headers=self.header).json()
 
     def get_instagram_media_engagement_with_unblocker(self, url):
-        endpoint = f'{self.social_api_url}/instagram/post-engagement-unblocker'
         payload = {'url': url, 'request_time': request_time()}
-        return requests.post(url=endpoint, headers=self.header, json=payload).json()
+        data = {
+            "method": "POST",
+            "endpoint": f'{self.social_api_url}/instagram/post-engagement-unblocker',
+            "header": self.header,
+            "payload": payload
+        }
+        return request_method(data=data)
 
     def get_instagram_profile_from_post_url(self, url):
         endpoint = f'{self.social_api_url}/facebook/instagram-oembed/get-profile-with-post'
