@@ -1,4 +1,5 @@
 import requests
+from app.helpers.method import request_method
 
 class TikTokAdapter:
 
@@ -7,20 +8,40 @@ class TikTokAdapter:
         self.header = header
     
     def get_user_info(self, username):
-        endpoint = f'{self.social_api_url}/tiktok/users/{username}'
-        return requests.get(url=endpoint, headers=self.header).json()
+        data = {
+            "method": "GET",
+            "endpoint": f'{self.social_api_url}/tiktok/users/{username}',
+            "header": self.header,
+            "payload": None
+        }
+        return request_method(data=data)
 
     def get_user_info_by_user_id(self, user_id):
-        endpoint = f'{self.social_api_url}/tiktok/{user_id}'
-        return requests.get(url=endpoint, headers=self.header).json()
+        data = {
+            "method": "GET",
+            "endpoint": f'{self.social_api_url}/tiktok/{user_id}',
+            "header": self.header,
+            "payload": None
+        }
+        return request_method(data=data)
 
     def get_user_timeline(self, sec_uid):
-        endpoint = f'{self.social_api_url}/tiktok/users/{sec_uid}/videos'
-        return requests.get(url=endpoint, headers=self.header).json()
+        data = {
+            "method": "GET",
+            "endpoint": f'{self.social_api_url}/tiktok/users/{sec_uid}/videos',
+            "header": self.header,
+            "payload": None
+        }
+        return request_method(data=data)
 
     def get_hashtag_info(self, hashtag):
-        endpoint = f'{self.social_api_url}/tiktok/hashtags/{hashtag}'
-        return requests.get(url=endpoint, headers=self.header).json()
+        data = {
+            "method": "GET",
+            "endpoint": f'{self.social_api_url}/tiktok/hashtags/{hashtag}',
+            "header": self.header,
+            "payload": None
+        }
+        return request_method(data=data)
 
     def get_hashtag_timeline(self, hashtag_id):
         endpoint = f'{self.social_api_url}/tiktok/hashtags/{hashtag_id}/videos'
